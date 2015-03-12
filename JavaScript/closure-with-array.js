@@ -16,5 +16,6 @@ function warningMaker(obstacle) {
           " today for " + obstacle + " danger.\n" +
           "Current danger zones are:\n" +
           list);
+          
   };
 }
