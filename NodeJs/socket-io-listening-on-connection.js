@@ -3,6 +3,9 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
+var redis = require('redis');
+var redisClient = redis.createClient();
+
 io.sockets.on('connection', function(client) {
   console.log("Client connected...");
 
@@ -15,6 +18,9 @@ io.sockets.on('connection', function(client) {
     if(!client.question_asked) {
       client.question_asked = true;
       client.broadcast.emit('question', question);
+
+      //adding to redis the questions
+      redisClient.lpush('questions', question);
     }
   });
 });
