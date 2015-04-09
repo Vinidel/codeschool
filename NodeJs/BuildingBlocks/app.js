@@ -2,17 +2,10 @@ var express = require('express');
 var app = express();
 
 
-app.get('/cities', function (request, response) {
-  var cities = ['Caspiana', 'Indigo', 'Paradise'];
-  response.send(cities);
+app.get('/', function (request, response) {
+  response.sendFile(__dirname + '/public/index.html');
 });
 
-
-//redirectting with permantly moved
-app.get('/locations', function(request, response){
-	response.redirect(301, '/cities');
-});
-
-app.listen(3001, function(){
+app.listen(3000, function(){
 	console.log('Running Express');
 });
