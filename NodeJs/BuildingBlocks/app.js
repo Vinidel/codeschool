@@ -4,9 +4,10 @@ var app = express();
 
 app.use(express.static('public'));
 
-// app.get('/', function (request, response) {
-//   response.sendFile(__dirname + '/public/index.html');
-// });
+app.get('/blocks', function (request, response) {
+  var blocks = ['Fixed','Movable','Rotating'];
+  response.json(blocks);
+});
 
 app.listen(3000, function(){
 	console.log('Running Express');
