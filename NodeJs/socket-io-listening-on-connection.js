@@ -8,6 +8,11 @@ var redisClient = redis.createClient();
 
 io.sockets.on('connection', function(client) {
   console.log("Client connected...");
+  redisClient.lrange('questions',0,-1, function(error, questions){
+    questions.forEach(function(question){
+    	client.emit('question', question);
+    });
+  });
 
   // listen for answers here
   client.on('answer', function(question, answer){
@@ -20,7 +25,9 @@ io.sockets.on('connection', function(client) {
       client.broadcast.emit('question', question);
 
       //adding to redis the questions
-      redisClient.lpush('questions', question);
+      redisClient.lpush('questions', question, function(){
+      	redisClient.ltrim('questions', 0, 19);
+      });
     }
   });
 });
