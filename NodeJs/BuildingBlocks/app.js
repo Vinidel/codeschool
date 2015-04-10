@@ -26,12 +26,17 @@ app.get('/blocks', function (request, response) {
 
 //adding a dynamic route
 app.get('/dynamic-blocks/:name', function(request, response){
-  var description = dynamicBlocks[request.params.name];
+  var name = request.params.name;
+  var blockName = name[0].toUpperCase() + name.slice(1).toLowerCase();
+  var description = dynamicBlocks[blockName];
+
+  console.log('Name: ' + description);
   if(!description){
     response.status(404).json('No description found for ' + request.params.name);
   } else {
     response.json(description);
   }
+  
 });
 
 
