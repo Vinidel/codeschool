@@ -13,35 +13,52 @@ var dynamicBlocks = {
   'Rotating': 'Moving in a circle around its center'
 };
 
+var locations = {
+  'Fixed':'First floor',
+  'Movable': 'Second floor',
+  'Rotating': 'Penthouse'
+};
+
+//using the app.param to parse the params in the request
+app.param('name', function(request, response, next){
+  var name = request.params.name;
+  var blockName = name[0].toUpperCase() + name.slice(1).toLowerCase();
+  request.blockName = blockName;
+  next();
+});
+
 
 //working with params on the request
 app.get('/blocks', function (request, response) {
-  var blocks = ['Fixed','Movable','Rotating'];
-  if(request.query.limit >= 0){
-    response.json(blocks.slice(0, request.query.limit));
-  }else {
-    response.json(blocks);
-  }
+  // var blocks = ['Fixed','Movable','Rotating'];
+  // if(request.query.limit >= 0){
+  //   response.json(blocks.slice(0, request.query.limit));
+  // }else {
+  //   response.json(blocks);
+  // }
+  response.json(Object.keys(dynamicBlocks));
 });
 
 //adding a dynamic route
 app.get('/dynamic-blocks/:name', function(request, response){
-  var name = request.params.name;
-  var blockName = name[0].toUpperCase() + name.slice(1).toLowerCase();
-  var description = dynamicBlocks[blockName];
+  var description = dynamicBlocks[request.blockName];
 
-  console.log('Name: ' + description);
   if(!description){
-    response.status(404).json('No description found for ' + request.params.name);
+    response.status(404).json('No description found for ' + request.blockName);
   } else {
     response.json(description);
   }
-  
 });
 
+app.get('/locations/:name', function(request, response){
+  var location = locations[request.blockName];
 
-
-
+  if(!location){
+    response.status(404).json('No location found for ' + request.blockName);
+  } else {
+    response.json(location);
+  }
+});
 
 app.listen(3000, function(){
 	console.log('Running Express');
