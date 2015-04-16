@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
-
+var bodyParser = require('body-parser');
+var parseUrlencoded = bodyParser.urlencoded({ extended: false});
 //this uses the logger middleware in all requests of the page
 var logger = require('./logger');
 app.use(logger);
@@ -58,6 +59,18 @@ app.get('/locations/:name', function(request, response){
   } else {
     response.json(location);
   }
+});
+
+app.post('/blocks', parseUrlencoded, function (request, response) {
+  var newBlock = request.body;
+  dynamicBlocks[newBlock.name] = newBlock.description;
+
+  response.status(201).json(newBlock.name);
+});
+
+app.delete('/blocks/:name', function(request, response){
+  delete dynamicBlocks[request.blockName];
+  response.sendStatus(200);
 });
 
 app.listen(3000, function(){
