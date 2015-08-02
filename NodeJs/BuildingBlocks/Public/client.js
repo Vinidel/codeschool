@@ -34,7 +34,8 @@ $(function(){
     for (var i in blocks) {
       block = blocks[i];
       content = '<a href ="/blocks/' + block +'">' + block + '</a>' +
-      '<a href="#" data-block="' + block + '"><img src="delete.jpg"></a>';
+      '<a href="#" data-block="' + block + '"><img src="delete.jpg"></a>' +
+      '<a href="/locations/' + block + '">Locations</a>';;
       list.push($('<li>', {html: content}));
     }
     $('.block-list').append(list);

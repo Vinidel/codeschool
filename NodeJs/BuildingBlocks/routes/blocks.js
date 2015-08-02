@@ -6,13 +6,15 @@ var parseUrlencoded = bodyParser.urlencoded({extended: false});
 var dynamicBlocks = {
   'Fixed':'Fastened securely in position',
   'Movable': 'Capable of being moved',
-  'Rotating': 'Moving in a circle around its center'
+  'Rotating': 'Moving in a circle around its center',
+  'Up and down': 'Always moving up and down'
 };
 
 var locations = {
   'Fixed':'First floor',
   'Movable': 'Second floor',
-  'Rotating': 'Penthouse'
+  'Rotating': 'Penthouse',
+  'Up and down': 'Underground'
 };
 
 router.route('/')

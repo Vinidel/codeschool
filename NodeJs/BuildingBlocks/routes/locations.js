@@ -7,7 +7,8 @@ var router = express.Router();
 var locations = {
   'Fixed':'First floor',
   'Movable': 'Second floor',
-  'Rotating': 'Penthouse'
+  'Rotating': 'Penthouse',
+  'Up and down': 'Underground'
 };
 
 router.route('/:name')
